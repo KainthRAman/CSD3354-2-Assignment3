@@ -4,27 +4,92 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTestProject1
+namespace Bankaccounts
 {
-    [TestMethod]
-    public void Debit_WhenAmountIsMoreThanBalance_ShouldThrowArgumentOutOfRange()
-    {
-        // Arrange
-        double beginningBalance = 11.99;
-        double debitAmount = 20.0;
-        BankAccount account = new BankAccount("Mr.Bryan Walton", beginingBalance);
 
-        // Act
-        try
+
+
+    public class BankAccount
+
+    {
+
+        public const string DebitamountExceedsBalanceMessage = "Debit amount exceeds balance";
+        public const string DebitamountLessThanZeroMessage = "Debit amount is less than zero";
+        private string m_customerName;
+        private double m_balance;
+        private bool m_frozen = false;
+        private BankAccount()
         {
-            account.Debit(debitAmount);
+
         }
-        catch (ArgumentOutOfRangeException e)
+
+        public BankAccount(string customerName, double balance)
         {
-            // Assert
-            StringAssert.Contains(e.Message, BankAccount.DebitAmountExceedsBalanceMessage);
-            return;
+            m_customerName = customerName;
+            m_balance = balance;
+
         }
-        Assert.Fail("The expected expected was not thrown.");
+        public string CustomerName
+        {
+            get { return m_customerName; }
+        }
+        public double Balance
+        {
+            get { return m_balance; }
+        }
+
+
+        public void Debit(double amount)
+        {
+            if (m_frozen)
+            {
+                throw new Exception("Account frozen");
+            }
+            if (amount > m_balance)
+            {
+                throw new ArgumentOutOfRangeException("amount", amount, DebitamountExceedsBalanceMessage);
+            }
+            if (amount < 0)
+            {
+                throw new ArgumentOutOfRangeException("amount", amount, DebitamountLessThanZeroMessage);
+            }
+            m_balance -= amount;
+
+
+        }
+
+        public void Credit(double amount)
+        {
+            if (m_frozen)
+            {
+                throw new Exception("frozen");
+            }
+            if (amount < 0)
+            {
+                throw new ArgumentOutOfRangeException("amount");
+            }
+            m_balance += amount;
+        }
+        private void FreezeAccount()
+        {
+            m_frozen = true;
+
+        }
+        private void UnfreezeAccount()
+        {
+            m_frozen = false;
+        }
+
+        static void Main(string[] args)
+        {
+
+            BankAccount ba = new BankAccount("Mr. Bryan Walton", 11.99);
+            ba.Credit(5.77);
+            ba.Debit(11.22);
+            Console.WriteLine("Current balance is ${0}", ba.Balance);
+
+
+        }
+
     }
 }
