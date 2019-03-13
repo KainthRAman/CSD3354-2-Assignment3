@@ -48,4 +48,16 @@ namespace BankAccounts
             }
             m_balance += amount;//intentionally incorrect code
         }
+        public void Credit(double amount)
+        {
+            if (m_frozen)
+            {
+                throw new ArgumentOutOfRangeException("Account frozen");
+            }
+            if (amount < 0)
+            {
+                throw new ArgumentOutOfRangeException("amount");
+            }
+            m_balance += amount;
+        }
     }
