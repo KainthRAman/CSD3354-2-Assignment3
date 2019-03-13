@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp2
-{
-    class Program
+namespace BankAccounts
+
+{   /// <summary>
+    /// Bank Account demo class 
+    /// </summary>
+    public class BankAccount
     {
-        static void Main(string[] args)
+        private string m_customerName;
+        private double m_balance;
+        private bool m_frozen = false;
+        private BankAccount()
         {
+
         }
-    }
-}
