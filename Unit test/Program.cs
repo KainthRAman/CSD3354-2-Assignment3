@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 namespace Bankaccounts
 {
 
-
+    // Student name Ramandeep kaur kainth  C0723796
+    //Student name Ashpreet singh   C0730263
+    // CSD3354 section 2
+    // Assigment 3
+    // March 13, 2019
 
     public class BankAccount
 
